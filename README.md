@@ -3,6 +3,7 @@ Parts and Testing Repository for the design of an Opensource CubeSat Structure i
 
 ![image](https://user-images.githubusercontent.com/31629430/113384942-bea1bb80-934c-11eb-8ce8-dc5310b07fd2.png)
 
+Questions can be directed to js214161@gmail.com, via the BlueDot CubeSat discord server, or via pull request.
 
 SolidWorks CAD files were modeled under a student license of that program and have the associated watermark and use restrictions as set by Dassault Systemes. This license overrides all subsidiary ones. 
 
