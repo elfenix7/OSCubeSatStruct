@@ -1,0 +1,286 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.openStep(
+    'C:/Users/js214/Desktop/ES100/CAD/Mk5 Design - Correct PC104 Spacing/Mk5_wInternals_forSimulation.STEP'
+    , scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='Mk5_wInternals_forSimulation-1', 
+    type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-2', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=3, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-3', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=4, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-4', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=5, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-5', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=6, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-6', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=7, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-7', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=8, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-8', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=9, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-9', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=10, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-10', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=11, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name=
+    'Mk5_wInternals_forSimulation-11', type=DEFORMABLE_BODY)
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-10']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-9']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-8']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-7']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-6']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-5']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-4']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-3']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-2']
+del mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-1']
+mdb.models['Model-1'].Material(name='Material-1')
+mdb.models['Model-1'].materials['Material-1'].Elastic(table=((69000000000.0, 
+    0.33), ))
+mdb.models['Model-1'].HomogeneousSolidSection(material='Material-1', name=
+    'Section-1', thickness=None)
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].Set(cells=
+    mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].SectionAssignment(
+    offset=0.0, offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].sets['Set-1']
+    , sectionName='Section-1', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=3.0)
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].setElementType(
+    elemTypes=(ElemType(elemCode=C3D20R, elemLibrary=STANDARD), ElemType(
+    elemCode=C3D15, elemLibrary=STANDARD), ElemType(elemCode=C3D10, 
+    elemLibrary=STANDARD, secondOrderAccuracy=OFF, distortionControl=DEFAULT)), 
+    regions=(
+    mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].setMeshControls(
+    regions=
+    mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), technique=SYSTEM_ASSIGN)
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].setMeshControls(
+    elemShape=TET, regions=
+    mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), technique=FREE)
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].generateMesh()
+mdb.models['Model-1'].StaticStep(name='Step-1', previous='Initial')
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'Mk5_wInternals_forSimulation-11-1', part=
+    mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'])
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Mk5_wInternals_forSimulation-11-1'].faces.getSequenceFromMask(
+    ('[#40000 ]', ), ), name='Set-1')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-1'], u1=UNSET, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Mk5_wInternals_forSimulation-11-1'].faces.getSequenceFromMask(
+    ('[#200 ]', ), ), name='Set-2')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=0.0, 
+    u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Mk5_wInternals_forSimulation-11-1'].faces.getSequenceFromMask(
+    ('[#400 ]', ), ), name='Set-3')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-3'], u1=0.0, 
+    u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].boundaryConditions['BC-2'].setValues(u1=UNSET, u3=0.0)
+mdb.models['Model-1'].rootAssembly.Surface(name='Surf-1', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Mk5_wInternals_forSimulation-11-1'].faces.getSequenceFromMask(
+    ('[#20000 ]', ), ))
+mdb.models['Model-1'].Pressure(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=TOTAL_FORCE, field='', magnitude=125000000.0, name=
+    'Load-1', region=mdb.models['Model-1'].rootAssembly.surfaces['Surf-1'])
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='test1leg', nodalOutputPrecision=SINGLE, 
+    numCpus=4, numDomains=4, numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    '', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
+    'S', 'MISES', 'E', 'PE', 'PEEQ', 'PEMAG', 'LE', 'U', 'UT', 'RF', 'CF', 
+    'CSTRESS', 'CDISP'))
+mdb.jobs['test1leg'].submit(consistencyChecking=OFF)
+mdb.jobs['test1leg']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '9 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST CF HAS BEEN REMOVED AS THERE ARE NO APPLICABLE LOADS IN THIS STEP', 
+    'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\test1leg.odb', 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 20524, 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'test1leg', 'memory': 104.0})
+mdb.jobs['test1leg']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16089.0, 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(MINIMUM_MEMORY, {'minimum_memory': 25.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'test1leg', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['test1leg']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'test1leg'})
+mdb.jobs['test1leg']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 23 02:17:05 2021', 'jobName': 'test1leg'})
+mdb.models['Model-1'].boundaryConditions['BC-1'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-2'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-3'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Mk5_wInternals_forSimulation-11-1'].faces.getSequenceFromMask(
+    ('[#40000 ]', ), ), name='Set-4')
+mdb.models['Model-1'].EncastreBC(createStepName='Step-1', localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'])
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='test2leg', nodalOutputPrecision=SINGLE, 
+    numCpus=4, numDomains=4, numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    '', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['test2leg'].submit(consistencyChecking=OFF)
+mdb.jobs['test2leg']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '9 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST CF HAS BEEN REMOVED AS THERE ARE NO APPLICABLE LOADS IN THIS STEP', 
+    'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\test2leg.odb', 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 4592, 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'test2leg', 'memory': 103.0})
+mdb.jobs['test2leg']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16089.0, 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(MINIMUM_MEMORY, {'minimum_memory': 25.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'test2leg', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['test2leg']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'test2leg'})
+mdb.jobs['test2leg']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 23 02:30:04 2021', 'jobName': 'test2leg'})
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].generateMesh()
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].deleteMesh()
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Mk5_wInternals_forSimulation-11'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='test3leg', nodalOutputPrecision=SINGLE, 
+    numCpus=4, numDomains=4, numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    '', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['test3leg'].submit(consistencyChecking=OFF)
+mdb.jobs['test3leg']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST CF HAS BEEN REMOVED AS THERE ARE NO APPLICABLE LOADS IN THIS STEP', 
+    'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\test3leg.odb', 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 42368, 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'test3leg', 'memory': 1371.0})
+mdb.jobs['test3leg']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 16089.0, 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(MINIMUM_MEMORY, {'minimum_memory': 216.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'test3leg', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['test3leg']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'test3leg'})
+mdb.jobs['test3leg']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 23 02:38:28 2021', 'jobName': 'test3leg'})
+# Save by js214 on 2021_03_23-14.44.26; build 2019 2018_09_24-14.41.51 157541
+# Save by js214 on 2021_03_24-00.08.40; build 2019 2018_09_24-14.41.51 157541

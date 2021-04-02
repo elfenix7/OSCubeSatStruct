@@ -1,0 +1,1298 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].suppress()
+mdb.models['Model-1'].StaticStep(initialInc=1000.0, maxInc=22200.0, minInc=1.0, 
+    name='Step-2', previous='Initial', timePeriod=22200.0)
+mdb.models['Model-1'].materials['Al6061'].Conductivity(table=((167.0, ), ))
+mdb.models['Model-1'].materials['Al6061'].Expansion(table=((2.36e-08, ), ), 
+    zero=25.0)
+mdb.models['Model-1'].TabularAmplitude(data=((0.0, -30.0), (3600.0, -30.0), (
+    9300.0, 65.0), (12900.0, 65.0), (18600.0, -30.0), (22200.0, -30.0)), name=
+    'Amp-1', smooth=SOLVER_DEFAULT, timeSpan=TOTAL)
+mdb.models['Model-1'].rootAssembly.features['RP-1'].suppress()
+mdb.models['Model-1'].rootAssembly.features['RP-3'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(cells=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].cells.getSequenceFromMask(
+    mask=('[#1 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].cells.getSequenceFromMask(
+    mask=('[#1 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_1-1'].cells.getSequenceFromMask(
+    mask=('[#f ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_2-1'].cells.getSequenceFromMask(
+    mask=('[#7 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_3-1'].cells.getSequenceFromMask(
+    mask=('[#f ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_4-1'].cells.getSequenceFromMask(
+    mask=('[#7 ]', ), ), edges=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].edges.getSequenceFromMask(
+    mask=('[#ffffffff:13 #ffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].edges.getSequenceFromMask(
+    mask=('[#ffffffff:11 #fffffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_1-1'].edges.getSequenceFromMask(
+    mask=('[#ffffffff:4 #3fffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_2-1'].edges.getSequenceFromMask(
+    mask=('[#ffffffff:3 #3fff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_3-1'].edges.getSequenceFromMask(
+    mask=('[#ffffffff:4 #3fffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_4-1'].edges.getSequenceFromMask(
+    mask=('[#ffffffff:3 #3fff ]', ), ), faces=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].faces.getSequenceFromMask(
+    mask=('[#ffffffff:5 #1fffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    mask=('[#ffffffff:4 #1fffffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_1-1'].faces.getSequenceFromMask(
+    mask=('[#ffffffff:2 #1f ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_2-1'].faces.getSequenceFromMask(
+    mask=('[#ffffffff #3ffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_3-1'].faces.getSequenceFromMask(
+    mask=('[#ffffffff:2 #1f ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_4-1'].faces.getSequenceFromMask(
+    mask=('[#ffffffff #3ffff ]', ), ), name='Set-3', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].vertices.getSequenceFromMask(
+    mask=('[#ffffffff:8 #3fff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].vertices.getSequenceFromMask(
+    mask=('[#ffffffff:7 #fff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_1-1'].vertices.getSequenceFromMask(
+    mask=('[#ffffffff:2 #3fffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_2-1'].vertices.getSequenceFromMask(
+    mask=('[#ffffffff:2 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_3-1'].vertices.getSequenceFromMask(
+    mask=('[#ffffffff:2 #3fffff ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_4-1'].vertices.getSequenceFromMask(
+    mask=('[#ffffffff:2 ]', ), ))
+mdb.models['Model-1'].Temperature(amplitude='Amp-1', createStepName='Step-2', 
+    crossSectionDistribution=CONSTANT_THROUGH_THICKNESS, distributionType=
+    UNIFORM, magnitudes=(1.0, ), name='Predefined Field-1', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-3'])
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    ('[#0 #2000000 ]', ), ), name='Set-4')
+mdb.models['Model-1'].XsymmBC(createStepName='Step-2', localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'])
+mdb.models['Model-1'].boundaryConditions.changeKey(fromName='BC-1', toName=
+    'Xsymm')
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    ('[#0 #4000000 ]', ), ), name='Set-5')
+mdb.models['Model-1'].ZsymmBC(createStepName='Step-2', localCsys=None, name=
+    'Zsymm', region=mdb.models['Model-1'].rootAssembly.sets['Set-5'])
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    ('[#0 #20000000 ]', ), ), name='Set-6')
+mdb.models['Model-1'].YsymmBC(createStepName='Step-2', localCsys=None, name=
+    'Ysymm', region=mdb.models['Model-1'].rootAssembly.sets['Set-6'])
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Mk5Temp_FreeExpansion', 
+    nodalOutputPrecision=SINGLE, numCpus=6, numDomains=6, numGPUs=0, queue=None
+    , resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', 
+    waitHours=0, waitMinutes=0)
+mdb.jobs['Mk5Temp_FreeExpansion'].submit(consistencyChecking=OFF, datacheckJob=
+    True)
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_1-1_SN,ASSEMBLY__T0_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_1-1_SN,ASSEMBLY__T1_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_4-1_SN,ASSEMBLY__T0_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_4-1_SN,ASSEMBLY__T1_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '23 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '35 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *TEMPERATURE IS USED BUT THE OPTION *INITIAL CONDITIONS,TYPE=TEMPERATURE IS NOT. THE INITIAL TEMPERATURE VALUES ARE ASSUMED TO BE ZERO.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '1 nodes are either missing intersection with their respective master surface or are outside the adjust zone. The nodes have been identified in node set WarnNodeMissMasterIntersect.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '1043 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\Mk5Temp_FreeExpansion.odb', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 62580, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'memory': 729.0})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 16089.0, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 207.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 30 23:12:42 2021', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion'].submit(consistencyChecking=OFF)
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_1-1_SN,ASSEMBLY__T0_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_1-1_SN,ASSEMBLY__T1_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_4-1_SN,ASSEMBLY__T0_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_4-1_SN,ASSEMBLY__T1_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '23 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '35 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *TEMPERATURE IS USED BUT THE OPTION *INITIAL CONDITIONS,TYPE=TEMPERATURE IS NOT. THE INITIAL TEMPERATURE VALUES ARE ASSUMED TO BE ZERO.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '1 nodes are either missing intersection with their respective master surface or are outside the adjust zone. The nodes have been identified in node set WarnNodeMissMasterIntersect.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '1043 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\Mk5Temp_FreeExpansion.odb', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 56532, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'memory': 1101.0})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 16089.0, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 189.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 1000.0, 
+    'attempts': 1, 'timeIncrement': 1000.0, 'increment': 1, 'stepTime': 1000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 2000.0, 
+    'attempts': 1, 'timeIncrement': 1000.0, 'increment': 2, 'stepTime': 2000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 2, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 3500.0, 
+    'attempts': 1, 'timeIncrement': 1500.0, 'increment': 3, 'stepTime': 3500.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 3, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 5750.0, 
+    'attempts': 1, 'timeIncrement': 2250.0, 'increment': 4, 'stepTime': 5750.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 4, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 9125.0, 
+    'attempts': 1, 'timeIncrement': 3375.0, 'increment': 5, 'stepTime': 9125.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 5, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 14187.5, 
+    'attempts': 1, 'timeIncrement': 5062.5, 'increment': 6, 
+    'stepTime': 14187.5, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 6, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 21781.25, 
+    'attempts': 1, 'timeIncrement': 7593.75, 'increment': 7, 
+    'stepTime': 21781.25, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 7, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 8, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 22200.0, 
+    'attempts': 1, 'timeIncrement': 418.75, 'increment': 8, 
+    'stepTime': 22200.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 30 23:14:44 2021', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.models['Model-1'].steps['Step-2'].setValues(initialInc=600.0, noStop=OFF, 
+    timeIncrementationMethod=FIXED)
+mdb.jobs['Mk5Temp_FreeExpansion'].submit(consistencyChecking=OFF)
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_1-1_SN,ASSEMBLY__T0_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_1-1_SN,ASSEMBLY__T1_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_4-1_SN,ASSEMBLY__T0_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_4-1_SN,ASSEMBLY__T1_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '23 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '35 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '21 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *TEMPERATURE IS USED BUT THE OPTION *INITIAL CONDITIONS,TYPE=TEMPERATURE IS NOT. THE INITIAL TEMPERATURE VALUES ARE ASSUMED TO BE ZERO.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '1 nodes are either missing intersection with their respective master surface or are outside the adjust zone. The nodes have been identified in node set WarnNodeMissMasterIntersect.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '1043 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\Mk5Temp_FreeExpansion.odb', 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'DESKTOP-7050F5S', 'handle': 53104, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'memory': 1101.0})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 16089.0, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 189.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 1, 'stepTime': 600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 1200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 2, 'stepTime': 1200.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 2, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 1800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 3, 'stepTime': 1800.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 3, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 2400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 4, 'stepTime': 2400.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 4, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 3000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 5, 'stepTime': 3000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 5, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 3600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 6, 'stepTime': 3600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 6, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 4200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 7, 'stepTime': 4200.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 7, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 4800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 8, 'stepTime': 4800.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 8, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 5400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 9, 'stepTime': 5400.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 9, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 6000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 10, 'stepTime': 6000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 10, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 6600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 11, 'stepTime': 6600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 11, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 7200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 12, 'stepTime': 7200.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 12, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 7800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 13, 'stepTime': 7800.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 13, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 8400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 14, 'stepTime': 8400.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 14, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 9000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 15, 'stepTime': 9000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 15, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 9600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 16, 'stepTime': 9600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 16, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 10200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 17, 
+    'stepTime': 10200.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 17, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 10800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 18, 
+    'stepTime': 10800.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 18, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 11400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 19, 
+    'stepTime': 11400.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 19, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 12000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 20, 
+    'stepTime': 12000.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 20, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 12600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 21, 
+    'stepTime': 12600.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 21, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 13200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 22, 
+    'stepTime': 13200.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 22, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 13800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 23, 
+    'stepTime': 13800.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 23, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 14400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 24, 
+    'stepTime': 14400.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 24, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 15000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 25, 
+    'stepTime': 15000.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 25, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 15600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 26, 
+    'stepTime': 15600.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 26, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 16200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 27, 
+    'stepTime': 16200.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 27, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 16800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 28, 
+    'stepTime': 16800.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 28, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 17400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 29, 
+    'stepTime': 17400.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 29, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 18000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 30, 
+    'stepTime': 18000.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 30, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 18600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 31, 
+    'stepTime': 18600.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 31, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 19200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 32, 
+    'stepTime': 19200.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 32, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 19800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 33, 
+    'stepTime': 19800.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 33, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 20400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 34, 
+    'stepTime': 20400.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 34, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 21000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 35, 
+    'stepTime': 21000.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 35, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 21600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 36, 
+    'stepTime': 21600.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 36, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 37, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(STATUS, {'totalTime': 22200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 37, 
+    'stepTime': 22200.0, 'step': 1, 'jobName': 'Mk5Temp_FreeExpansion', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.jobs['Mk5Temp_FreeExpansion']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 30 23:18:07 2021', 'jobName': 'Mk5Temp_FreeExpansion'})
+mdb.models['Model-1'].boundaryConditions['Xsymm'].suppress()
+mdb.models['Model-1'].boundaryConditions['Ysymm'].suppress()
+mdb.models['Model-1'].boundaryConditions['Zsymm'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Rail_3-1'].faces.getSequenceFromMask(
+    mask=('[#10004 #8001 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_2-1'].faces.getSequenceFromMask(
+    mask=('[#80020100 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].faces.getSequenceFromMask(
+    mask=('[#0 #1400 #1008810 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    mask=('[#0 #4000005 #4022 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_1-1'].faces.getSequenceFromMask(
+    mask=('[#4200002 #2000 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_4-1'].faces.getSequenceFromMask(
+    mask=('[#80020100 ]', ), ), name='Set-7')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-2', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-7'], u1=UNSET, 
+    u2=UNSET, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Rail_3-1'].faces.getSequenceFromMask(
+    mask=('[#10100010 #4000 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].faces.getSequenceFromMask(
+    mask=('[#0 #a00 #240108 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_4-1'].faces.getSequenceFromMask(
+    mask=('[#200010 #1 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    mask=('[#80000000 #42000002 #900 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_2-1'].faces.getSequenceFromMask(
+    mask=('[#200010 #1 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Rail_1-1'].faces.getSequenceFromMask(
+    mask=('[#40020020 #8000 ]', ), ), name='Set-8')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-2', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'x0', region=mdb.models['Model-1'].rootAssembly.sets['Set-8'], u1=0.0, u2=
+    UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].boundaryConditions.changeKey(fromName='BC-4', toName=
+    'z0')
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Deployment-1'].faces.getSequenceFromMask(
+    mask=('[#0:2 #2081080 ]', ), )+\
+    mdb.models['Model-1'].rootAssembly.instances['Baseplate_Plain-1'].faces.getSequenceFromMask(
+    mask=('[#0 #20000000 #8204 ]', ), ), name='Set-9')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-2', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'y0', region=mdb.models['Model-1'].rootAssembly.sets['Set-9'], u1=UNSET, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].steps['Step-2'].setValues(maxInc=600.0, 
+    timeIncrementationMethod=AUTOMATIC)
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Mk5Temp_ConstrainedStress', 
+    nodalOutputPrecision=SINGLE, numCpus=6, numDomains=6, numGPUs=0, queue=None
+    , resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', 
+    waitHours=0, waitMinutes=0)
+mdb.jobs['Mk5Temp_ConstrainedStress'].submit(consistencyChecking=OFF)
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'DESKTOP-7050F5S', 'handle': 0, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_1-1_SN,ASSEMBLY__T0_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_1-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_1-1_SN,ASSEMBLY__T1_RAIL_1-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_2-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_3-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T0_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T0_RAIL_4-1_SN,ASSEMBLY__T0_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE SURFACE ASSEMBLY__T1_RAIL_4-1_SN IS A NODE-BASED SURFACE USED WITH SURFACE TO SURFACE APPROACH.  IN ORDER TO OBTAIN IMPROVED STRESS ACCURACY WITH THIS APPROACH, AN ELEMENT-BASED SURFACE SHOULD BE USED INSTEAD.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'PLEASE MAKE SURE THAT THE MESH DENSITY OF THE SLAVE SURFACE IN THE TIE PAIR (ASSEMBLY__T1_RAIL_4-1_SN,ASSEMBLY__T1_RAIL_4-1_M) IS FINER THAN THE MASTER SURFACE.  THE ANALYSIS MAY RUN SLOWER, MAY YIELD INACCURATE RESULTS, AND MAY REQUIRE MORE MEMORY IF THIS IS NOT THE CASE.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-1-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-1-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-4-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-4-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-8-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-8-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-12-BASEPLATE_DEPLOYMENT-1-ASSEMBLY_CP-12-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-14-BASEPLATE_PLAIN-1-ASSEMBLY_CP-14-RAIL_1-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-17-BASEPLATE_PLAIN-1-ASSEMBLY_CP-17-RAIL_2-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-21-BASEPLATE_PLAIN-1-ASSEMBLY_CP-21-RAIL_3-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_CP-25-BASEPLATE_PLAIN-1-ASSEMBLY_CP-25-RAIL_4-1), ADJUSTED NODES WITH VERY SMALL ADJUSTMENTS WERE NOT PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': '184 nodes have been adjusted. The nodes have been identified in node set WarnNodeAdjust.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *TEMPERATURE IS USED BUT THE OPTION *INITIAL CONDITIONS,TYPE=TEMPERATURE IS NOT. THE INITIAL TEMPERATURE VALUES ARE ASSUMED TO BE ZERO.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': '1 nodes are either missing intersection with their respective master surface or are outside the adjust zone. The nodes have been identified in node set WarnNodeMissMasterIntersect.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': '1043 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\ABAQUS\\Mk5Temp_ConstrainedStress.odb', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'DESKTOP-7050F5S', 'handle': 34276, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'memory': 1101.0})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 16089.0, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 189.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 1, 'stepTime': 600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 1200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 2, 'stepTime': 1200.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 2, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 1800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 3, 'stepTime': 1800.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 3, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 2400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 4, 'stepTime': 2400.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 4, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 3000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 5, 'stepTime': 3000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 5, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 3600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 6, 'stepTime': 3600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 6, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 4200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 7, 'stepTime': 4200.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 7, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 4800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 8, 'stepTime': 4800.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 8, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 5400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 9, 'stepTime': 5400.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 9, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 6000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 10, 'stepTime': 6000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 10, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 6600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 11, 'stepTime': 6600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 11, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 7200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 12, 'stepTime': 7200.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 12, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 7800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 13, 'stepTime': 7800.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 13, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 8400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 14, 'stepTime': 8400.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 14, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 9000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 15, 'stepTime': 9000.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 15, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 9600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 16, 'stepTime': 9600.0, 
+    'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 16, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 10200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 17, 
+    'stepTime': 10200.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 17, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 10800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 18, 
+    'stepTime': 10800.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 18, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 11400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 19, 
+    'stepTime': 11400.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 19, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 12000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 20, 
+    'stepTime': 12000.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 20, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 12600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 21, 
+    'stepTime': 12600.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 21, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 13200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 22, 
+    'stepTime': 13200.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 22, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 13800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 23, 
+    'stepTime': 13800.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 23, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 14400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 24, 
+    'stepTime': 14400.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 24, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 15000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 25, 
+    'stepTime': 15000.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 25, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 15600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 26, 
+    'stepTime': 15600.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 26, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 16200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 27, 
+    'stepTime': 16200.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 27, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 16800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 28, 
+    'stepTime': 16800.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 28, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 17400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 29, 
+    'stepTime': 17400.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 29, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 18000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 30, 
+    'stepTime': 18000.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 30, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 18600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 31, 
+    'stepTime': 18600.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 31, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 19200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 32, 
+    'stepTime': 19200.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 32, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 19800.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 33, 
+    'stepTime': 19800.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 33, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 20400.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 34, 
+    'stepTime': 20400.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 34, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 21000.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 35, 
+    'stepTime': 21000.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 35, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 21600.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 36, 
+    'stepTime': 21600.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 36, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 37, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(STATUS, {'totalTime': 22200.0, 
+    'attempts': 1, 'timeIncrement': 600.0, 'increment': 37, 
+    'stepTime': 22200.0, 'step': 1, 'jobName': 'Mk5Temp_ConstrainedStress', 
+    'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
+mdb.jobs['Mk5Temp_ConstrainedStress']._Message(JOB_COMPLETED, {
+    'time': 'Tue Mar 30 23:35:21 2021', 
+    'jobName': 'Mk5Temp_ConstrainedStress'})
